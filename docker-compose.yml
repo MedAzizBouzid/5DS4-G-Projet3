@@ -1,15 +1,17 @@
 version: "3.8"
+
 networks:
   app-network:
+
 services:
   mysqldb:
     image: mysql:8.2.0
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=tpachato
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - db:/var/lib/mysql
     networks:
@@ -21,19 +23,19 @@ services:
     image: bergila/projet-devops-5ds4:latest  # Remplacez par le nom de votre image Docker
     restart: on-failure
     ports:
-      - 8089:8089
+      - "8089:8089"
     environment:
-      SPRING_APPLICATION_JSON: '{
-          "spring.datasource.url=jdbc:mysql://localhost:3306/tpachato?createDatabaseIfNotExist=true",
-          "spring.datasource.username=root",
-          "spring.datasource.password=",
-          "spring.jpa.show-sql=true",
-          "spring.jpa.hibernate.ddl-auto=update"
-            }'
-
-
-      stdin_open: true
-      tty: true
+      SPRING_APPLICATION_JSON: "{
+        \"spring.datasource.url\": \"jdbc:mysql://mysqldb:3306/tpachato?createDatabaseIfNotExist=true\",
+        \"spring.datasource.username\": \"root\",
+        \"spring.datasource.password\": \"\",
+        \"spring.jpa.show-sql\": \"true\",
+        \"spring.jpa.hibernate.ddl-auto\": \"update\"
+      }"
+    stdin_open: true
+    tty: true
+    networks:
+      - app-network
 
 volumes:
   db:
