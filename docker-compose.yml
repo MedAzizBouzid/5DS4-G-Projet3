@@ -6,7 +6,7 @@ services:
     image: mysql:8.2.0
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=tpachato
     ports:
       - 3306:3306
@@ -30,8 +30,6 @@ services:
           "spring.jpa.show-sql=true",
           "spring.jpa.hibernate.ddl-auto=update"
             }'
-
-
       stdin_open: true
       tty: true
 
