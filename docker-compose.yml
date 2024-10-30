@@ -1,39 +1,29 @@
-version: "3.8"
-networks:
-  app-network:
+
+version: '3.8'
+
 services:
-  mysqldb:
-    image: mysql:8.2.0
-    restart: unless-stopped
+  mysql:
+    image: mysql:latest
+    restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_DATABASE=tpachato
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tpachato
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
-      - db:/var/lib/mysql
-    networks:
-      - app-network
+      - mysql_data:/var/lib/mysql
 
-  app-achat:
-    depends_on:
-      - mysqldb
-    image: bergila/projet-devops-5ds4:latest  # Remplacez par le nom de votre image Docker
-    restart: on-failure
+  spring-app:
+    build: .
+    restart: always
     ports:
-      - 8089:8089
+      - "8089:8089"
     environment:
-      SPRING_APPLICATION_JSON: '{
-                "spring.datasource.url=jdbc:mysql://localhost:3306/tpachato?createDatabaseIfNotExist=true",
-                "spring.datasource.username=root",
-                "spring.datasource.password=",
-                "spring.jpa.show-sql=true",
-                "spring.jpa.hibernate.ddl-auto=update"
-            }'
-
-
-      stdin_open: true
-      tty: true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tpachato?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - mysql                       # Assurez-vous que le conteneur MySQL est prêt avant de démarrer l'application
 
 volumes:
-  db:
+  mysql_data:
