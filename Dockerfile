@@ -1,4 +1,4 @@
-FROM bergila/projet-devops-5ds4
+FROM bergila/alpine
 
 # Définit le port exposé par le conteneur
 EXPOSE 8089
