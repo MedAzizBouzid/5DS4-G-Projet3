@@ -1,3 +1,13 @@
+# Ignorer tout par défaut
+*
+
+# Ne pas ignorer les dossiers et fichiers souhaités
+!src/
+!pom.xml
+!Dockerfile
+!docker-compose.yml
+
+# Ignorer les fichiers générés et de configuration d'IDE
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
