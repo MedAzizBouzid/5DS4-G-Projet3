@@ -3,7 +3,7 @@ version: '3.8'
 
 services:
   mysql:
-    image: mysql:5.1.46
+    image: mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD:
