@@ -39,7 +39,7 @@ public class FactureServiceImplTest {
     @Test
     void testRetrieveAllFactures() {
         // Arrange
-        when(factureRepository.findAll()).thenReturn(Arrays.asList(testFacture));
+        when(factureRepository.findAll()).thenReturn(Arrays.asList(testFacture)); // Using Arrays.asList
 
         // Act
         List<Facture> factures = factureService.retrieveAllFactures();
